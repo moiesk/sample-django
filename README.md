@@ -1,12 +1,12 @@
 # Getting Started
 
-This will guide through the steps to install the mako cli and pushing this repo to a new app
+This will guide through the steps to install the sail cli and pushing this repo to a new app
 
-## Installing Mako
+## Installing App Sail
 
-To install the mako cli run in your Mac terminal:
+To install the sail cli run in your Mac terminal:
 
-    bash <(curl -s https://mako.nyc3.digitaloceanspaces.com/install)
+    bash <(curl -s https://appsail.nyc3.digitaloceanspaces.com/install)
 
 ## Downloading the source code
 
@@ -17,9 +17,9 @@ To download the demo app run in your Mac or Linux terminal:
 
 ## Deploying App
 
-    mako push
+    sail push
 
-It will ask for an auth key if you haven't used mako before. Retrieve it from [the auth page](https://mako.digitalocean.com/auth).
+It will ask for an auth key if you haven't used sail before. Retrieve it from [the auth page](https://appsail.digitalocean.com/auth).
 
 Then it will ask how to configure the app.
 Answer the questions as follows:

@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# This script is to help start the django project.
+
+# run any commands that need to be done before starting processes.
+
+# Set project_name
+project_name=""
+if [[ -z "${project_name}" ]]; then
+  # find the wsgi file
+  wsgi=$(find . -type f -name wsgi.py)
+  if [[ -n "${wsgi}" ]]; then
+    project_name=$(echo $wsgi | sed 's/^\.\///;s/\/wsgi\.py$//;s/\//./')
+  fi
+fi
+
+# Set up things to run
+processes=()
+# entries should be quoted like this:
+# processes+=("sleep 60")
+if [[ -n "${project_name}" ]]; then
+  processes+=("gunicorn --workers=$(nproc) --bind 0.0.0.0:8080 ${project_name}.wsgi --log-file - --access-logfile -")
+fi
+
+# Setting important environment variables.
+export PORT=8080
+export HOST=0.0.0.0
+
+if [[ ${#processes[@]} -gt 1 ]]; then
+  # Run and track things to execute.
+  wait_pipe=$(mktemp -t "appsail.waitpipe.XXXXXX" -u)
+  rm -f $wait_pipe
+  mkfifo $wait_pipe
+  exec 3<> $wait_pipe
+  pids=()
+  cleanup() { echo "Going down, terminating child processes..." >&2; rm -f ${wait_pipe} || true; kill -USR1 "${pids[@]}" 2> /dev/null || true; }
+  trap 'trap - QUIT EXIT; cleanup; kill -QUIT $$' QUIT
+  trap 'trap - TERM EXIT; cleanup; kill -TERM $$' TERM
+  trap 'trap - EXIT; cleanup' EXIT
+  trap 'trap - INT EXIT; cleanup; kill -INT $$' INT;
+
+  for process in "${processes[@]}"; do
+    echo "Starting '${process}'"
+    (
+      trap '' INT;
+      trap 'echo "${process}" >&3;' EXIT
+      trap 'trap - TERM; kill -TERM $pid 2> /dev/null || true & wait $pid 2> /dev/null || true; [[ ${BASHPID:-} ]] && kill -TERM $BASHPID' TERM
+      trap 'trap - USR1 EXIT; kill -TERM $pid 2> /dev/null || true & wait $pid 2> /dev/null || true; [[ ${BASHPID:-} ]] && kill -USR1 $BASHPID' USR1
+
+      ${process} & pid=$!
+
+      wait
+    ) & pids+=($!)
+    disown $!
+  done
+  read exitproc <&3
+  echo "Process exited unexpectedly: '$exitproc'" >&2
+  exit 1
+elif [[ ${#processes[@]} -eq 1 ]]; then
+  # only one thing to run, so exec it.
+  echo "Starting '${processes[0]}'"
+  exec ${processes[0]}
+else
+  # didn't set up any executables
+  echo "Nothing to run, please configure the start script" >&2
+  exec sleep 10
+fi
