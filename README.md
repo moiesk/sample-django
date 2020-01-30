@@ -13,7 +13,7 @@ To install the sail cli run in your Mac terminal:
 To download the demo app run in your Mac or Linux terminal:
 
 	git clone https://github.com/digitalocean-appsail/sample-django
-	cd django-todoapp
+	cd sample-django
 
 ## Deploying App
 
