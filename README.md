@@ -12,14 +12,14 @@ To install the sail cli run in your Mac terminal:
 
 To download the demo app run in your Mac or Linux terminal:
 
-	git clone https://github.com/jonfriesen/django-todoapp.git
+	git clone https://github.com/digitalocean-appsail/sample-django
 	cd django-todoapp
 
 ## Deploying App
 
     sail push
 
-It will ask for an auth key if you haven't used sail before. Retrieve it from [the auth page](https://appsail.digitalocean.com/auth).
+It will ask for an auth key if you haven't used sail before. Retrieve it from [the auth page](https://cloud.digitalocean.com/appsail/auth).
 
 Then it will ask how to configure the app.
 Answer the questions as follows:
@@ -38,3 +38,6 @@ After that, it will go through a deploy process. Once it's done, you can open th
 	2. Click the 'Apps' link in the top left corner
 	3. Select the app you just deployed
 	4. Click the 'Live App' button in the top right part of the screen
+
+# Author
+This project was original created by [Kabir Baidhya](https://github.com/kabirbaidhya/django-todoapp).
