@@ -40,4 +40,4 @@ After that, it will go through a deploy process. Once it's done, you can open th
 	4. Click the 'Live App' button in the top right part of the screen
 
 # Author
-This project was original created by [Kabir Baidhya](https://github.com/kabirbaidhya/django-todoapp).
+This project was originally created by [Kabir Baidhya](https://github.com/kabirbaidhya/django-todoapp).
