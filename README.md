@@ -1,43 +1,61 @@
-# Getting Started
+# Getting Started #
 
-This will guide through the steps to install the sail cli and pushing this repo to a new app
+These steps will get this sample application running for you using DigitalOcean.
 
-## Installing App Sail
+**Note: Following these steps will result in charges for the use of DigitalOcean Droplets**
 
-To install the sail cli run in your Mac terminal:
+## Requirements
 
-    bash <(curl -s https://appsail.nyc3.digitaloceanspaces.com/install)
+* Docker must be [installed locally](https://docs.docker.com/install/) on your machine, unless you choose to build remotely via Github Actions (beyond the scope of this README)
+* You need a DigitalOcean account. If you don't already have one, you can sign up at https://cloud.digitalocean.com/registrations/new
+    
 
-## Downloading the source code
+## Installing App Sail ##
 
-To download the demo app run in your Mac or Linux terminal:
+To install the App Sail CLI, visit https://cloud.digitalocean.com/appsail and choose to Create or Launch a new app. Follow the on-screen instructions for installing the CLI.
 
-	git clone https://github.com/digitalocean-appsail/sample-django
+## Downloading the Sample App Source Code
+
+To download the demo app run in your terminal:
+
+	git clone https://github.com/digitalocean-appsail/sample-django.git
 	cd sample-django
 
-## Deploying App
+## Deploying the App ##
 
-    sail push
+	sail push
 
-It will ask for an auth key if you haven't used sail before. Retrieve it from [the auth page](https://cloud.digitalocean.com/appsail/auth).
+It will ask for an auth key if you haven't used the sail CLI before. Retrieve it from [the auth page](https://cloud.digitalocean.com/appsail/auth).
 
 Then it will ask how to configure the app.
 Answer the questions as follows:
 
-    ✓ Choose your configuration preference: Automatic...
-    ✓ Django app detected, is this correct: Yes
-    ✓ Use Python 3: Yes
-    ✓ Do you need any background workers: No
-    ✓ Do you need a database: Yes
-    ✓ Database type: Postgres
-    ✓ Add another database: No
+	✓ Is this app already live (on App Sail)?: No
+	✓ Name this app : sample-django
+	✓ Need to set any env variables: No
 
-After that, it will go through a deploy process. Once it's done, you can open the live app by following these steps:
+It won't ask any additional questions because this application has a [sail.yml](.sail/deploy/sail.yml) file already defined. This acts as a configuration file for App Sail application deployment. You can learn more about sail.yml here: https://www.digitalocean.com/docs/appsail/configuration/sail.yml/.
 
-	1. Go back to the auth page in your browser
-	2. Click the 'Apps' link in the top left corner
-	3. Select the app you just deployed
-	4. Click the 'Live App' button in the top right part of the screen
+After answering these questions, it will go through a deploy process. Once it's done, you can open the live app or administration dashboard by following the links provided by the App Sail CLI once the push is completed.
+
+## Learn More ##
+
+You can learn more about App Sail and how to manage and update your application at https://www.digitalocean.com/docs/appsail/.
+
+
+## Deleting the App #
+
+When you no longer need this sample application running live, you can delete it by following these steps:
+1. Visit the app dashboard at https://cloud.digitalocean.com/appsail
+1. Navigate to the sample-nodejs app
+1. Choose "App Config"->"Show More"
+1. Select "Delete", type your app's name, and click "Delete App".
+
+This will delete the app and destroy any underlying DigitalOcean Droplets. 
+
+**Note: If you don't delete your app, charges for the use of DigitalOcean Droplets will continue to accrue. Also, even if you delete your app, a new push to your sample-nodejs repo on Github will trigger a new deploy which will result in DigitalOcean charges.**
+
+
 
 # Author
 This project was originally created by [Kabir Baidhya](https://github.com/kabirbaidhya/django-todoapp).
